@@ -1,0 +1,71 @@
+<ion-view view-title="Quotes">
+    <ion-header-bar class="bar-positive">
+        		<button class="button button-icon icon ion-ios7-minus-outline" 
+          ng-click="data.showDelete = !data.showDelete; data.showReorder = false"></button>
+
+            <h1 class="title">India Stock</h1>
+		<button class="button button-icon ion-arrow-move"
+          ng-click="data.showDelete = false; data.showReorder = !data.showReorder"></button>
+    </ion-header-bar>
+ <ion-content>
+    <ion-list  show-delete="data.showDelete" show-reorder="data.showReorder">
+		<ion-item ng-repeat="quote in quoteList">
+            <div class="row">
+                <div class="col col-50">
+                    <a ng-href="https://www.google.com/finance?cid={{quote.id}}">{{quote.t}}
+                    </a>
+                </div>
+                <div class="col">
+                    {{quote.l}}
+                </div>
+                <div class="col">
+                    {{quote.c}}
+                </div>
+                <div class="col">
+                    {{quote.cp}}%
+                </div>
+            </div>
+            <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete(quote)"></ion-delete-button>
+            <ion-reorder-button class="ion-navicon" on-reorder="moveItem(quote, $fromIndex, $toIndex)"></ion-reorder-button>
+        </ion-item>
+
+    </ion-list>
+    <div class="row">
+        <div class="col text-center">
+            <button class="button button-positive" ng-click="modal.show()">Add New Stock</button>
+        </div>
+    </div>
+</ion-content>
+<ion-footer>
+    <div class="bar bar-footer bar-balanced">
+        <div class="title">Latest Market News</div>
+    </div>
+</ion-footer>
+<script id="new-quote.html" type="text/ng-template">
+    <ion-modal-view>
+        <!-- Modal header bar -->
+        <ion-header-bar class="bar-secondary">
+          <h1 class="title">Select NSE Stock</h1>
+          <button class="button button-clear button-positive" ng-click="modal.hide()">Cancel</button>
+        </ion-header-bar>
+        <ion-content>
+           <div class="list">
+            <div class="bar bar-header item-input-inset">
+                <ion-search placeholder="Search a user" filter="search"></ion-search>
+            </div>
+            <div ng-repeat="user in stockList | filter:search.value" class="item">
+                <div class="row">
+                    <div class="col col-40">
+                        {{user.NAME}}
+                    </div>
+                    <div class="col col-40">
+                        {{user.SYMBOL}}
+                    </div><div class="col col-20"><button class="button button-small button-calm ion-plus" ng-click="createQuote(user.name)"></button>
+                    </div>
+                </div>
+             </div>
+        </div>
+        </ion-content>
+    </ion-modal-view>
+</script>
+</ion-view>
